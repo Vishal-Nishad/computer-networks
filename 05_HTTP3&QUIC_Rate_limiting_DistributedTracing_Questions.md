@@ -1,7 +1,4 @@
-# Day 6 & 7 Combined Guide: Advanced System Design, Real-Time Protocols & Mock Interview Mastery
-
-**For:** Backend developers with ~2 years experience preparing for ₹20+ LPA roles.  
-**Style:** Plain English, zero academic jargon, visual diagrams, and practical system design scenarios.
+# Combined Guide: Advanced System Design, Real-Time Protocols & Mock exam Mastery
 
 ---
 
@@ -18,7 +15,7 @@ This guide covers the remaining **Day 6 & Day 7** topics to complete your 7-day 
    - Live Chat / WhatsApp: Scaling 1,000,000 WebSockets horizontally using Redis Pub/Sub.
    - Flash Sale / Ticket Booking: Preventing network overload during high-concurrency spikes.
 6. **"Latency Numbers Every Programmer Must Know"** — Practical rules of thumb.
-7. **The ₹20+ LPA Mock Interview Final Drill** — 15 trick questions that separate junior from senior developers.
+7. **The ₹20+ LPA Mock exam Final Drill** — 15 trick questions that separate junior from senior developers.
 
 ---
 
@@ -73,15 +70,15 @@ flowchart TD
 
 ---
 
-### 🎙️ Spoken Interview Answer (45 Seconds)
+### 🎙️ Spoken exam Answer (45 Seconds)
 > "HTTP/2 solved application-level head-of-line blocking by multiplexing streams over one TCP connection, but it still suffered from transport-level head-of-line blocking: if a single TCP packet dropped, the entire connection stalled. HTTP/3 fixes this by running QUIC over UDP. Each stream is truly independent at the transport layer, so packet loss on one image doesn't block other assets. Furthermore, QUIC uses Connection IDs instead of IP addresses, allowing seamless connection migration when mobile users switch between Wi-Fi and cellular networks without renegotiating handshakes."
 
 ---
 
 ## 2. Real-Time Communication Decision Matrix
 
-In System Design interviews, candidates often say: *"We will use WebSockets for everything real-time."*  
-**Interviewers will penalize this.** WebSockets are stateful and expensive. You must choose the right tool for the job.
+In System Design exams, candidates often say: *"We will use WebSockets for everything real-time."*  
+**examers will penalize this.** WebSockets are stateful and expensive. You must choose the right tool for the job.
 
 ```mermaid
 flowchart TD
@@ -106,8 +103,8 @@ flowchart TD
 | **Server-Sent Events (SSE)** | Persistent HTTP | **Server $\to$ Client Only** | Low (Stateless-friendly) | Stock tickers, AI streaming responses (ChatGPT tokens), live sports scores. |
 | **Webhooks** | HTTP POST event | **Server $\to$ Server** | Low | Third-party integrations (Stripe, GitHub push events). |
 
-> 💡 **Interview Pro-Tip on ChatGPT:**  
-> When the interviewer asks: *"How does ChatGPT stream text word-by-word into the browser?"*  
+> 💡 **exam Pro-Tip on ChatGPT:**  
+> When the examer asks: *"How does ChatGPT stream text word-by-word into the browser?"*  
 > **Answer:** It does **NOT** use WebSockets! It uses **Server-Sent Events (SSE)** over standard HTTP, because text flows only in one direction (server to client) and SSE handles auto-reconnection natively.
 
 ---
@@ -205,7 +202,7 @@ flowchart TD
 ### Scenario A: URL Shortener (TinyURL) — `301` vs. `302` Redirects
 
 When a user visits `https://tinyurl.com/xyz123`, the server redirects them to the long URL.  
-**System Design Interview Question:** *"Will you return HTTP 301 or HTTP 302, and why?"*
+**System Design exam Question:** *"Will you return HTTP 301 or HTTP 302, and why?"*
 
 ```mermaid
 flowchart LR
@@ -227,7 +224,7 @@ flowchart LR
 | **301 Moved Permanently** | Browser caches forever | **Lowest** (Browser skips server) | ❌ **Broken** (Server cannot count clicks) |
 | **302 Found / 307 Temp** | Browser does not cache | Higher (Every click hits server) | ✅ **Accurate** (Tracks location, referrer, and user stats) |
 
-> 🏆 **The Winning Interview Answer:**  
+> 🏆 **The Winning exam Answer:**  
 > *"If our primary business goal is tracking click metrics, referral sources, and user analytics, we must use **HTTP 302 Found**. If our goal is minimal server cost and maximum redirect speed where analytics do not matter, we use **HTTP 301 Moved Permanently**."*
 
 ---
@@ -307,7 +304,7 @@ When designing systems, keep these practical rules of thumb in mind:
 
 ---
 
-## 7. The Final ₹20+ LPA Mock Interview Drill: 15 Rapid-Fire Questions
+## 7. The Final ₹20+ LPA Mock exam Drill: 15 Rapid-Fire Questions
 
 #### Q1: Why does HTTP/3 use UDP instead of TCP?
 > "HTTP/3 uses UDP via QUIC to eliminate transport-layer head-of-line blocking. In HTTP/2 over TCP, a single lost packet freezes all multiplexed streams until retransmitted. In HTTP/3, streams are completely independent, so packet loss on one stream does not impact others. It also provides 0-RTT connection resumption and connection migration for mobile devices."
@@ -362,8 +359,8 @@ You now possess a complete, end-to-end understanding of computer networking—fr
 
 ### 📚 Complete Study Suite Reference:
 
-- 📄 [`DAY1_INTERVIEW_GUIDE.md`](./DAY1_INTERVIEW_GUIDE.md) — OSI, TCP/UDP, DNS, IP/Ports, HTTP/HTTPS, Latency
-- 📄 [`DAY2_INTERVIEW_GUIDE.md`](./DAY2_INTERVIEW_GUIDE.md) — HTTP/2, WebSockets, REST, CORS, JWT vs Sessions, Caching
-- 📄 [`DAY3_INTERVIEW_GUIDE.md`](./DAY3_INTERVIEW_GUIDE.md) — Reverse Proxies, L4 vs L7, API Gateways, gRPC, DB Pooling, Kafka vs RabbitMQ
-- 📄 [`DAY4_5_INTERVIEW_GUIDE.md`](./DAY4_5_INTERVIEW_GUIDE.md) — Plain English HTTPS, NAT, CDNs, epoll Sockets, Production Debugging, "Pay Now" flow
-- 📄 [`DAY6_7_INTERVIEW_GUIDE.md`](./DAY6_7_INTERVIEW_GUIDE.md) — [THIS FILE] HTTP/3 QUIC, Real-Time Decision Matrix, Rate Limiting, TinyURL/WhatsApp/Flash-Sale System Design & Final Mock Drill! 🚀
+- 📄 [`DAY1_exam_GUIDE.md`](./DAY1_exam_GUIDE.md) — OSI, TCP/UDP, DNS, IP/Ports, HTTP/HTTPS, Latency
+- 📄 [`DAY2_exam_GUIDE.md`](./DAY2_exam_GUIDE.md) — HTTP/2, WebSockets, REST, CORS, JWT vs Sessions, Caching
+- 📄 [`DAY3_exam_GUIDE.md`](./DAY3_exam_GUIDE.md) — Reverse Proxies, L4 vs L7, API Gateways, gRPC, DB Pooling, Kafka vs RabbitMQ
+- 📄 [`DAY4_5_exam_GUIDE.md`](./DAY4_5_exam_GUIDE.md) —  HTTPS, NAT, CDNs, epoll Sockets, Production Debugging, "Pay Now" flow
+- 📄 [`DAY6_7_exam_GUIDE.md`](./DAY6_7_exam_GUIDE.md) — [THIS FILE] HTTP/3 QUIC, Real-Time Decision Matrix, Rate Limiting, TinyURL/WhatsApp/Flash-Sale System Design & Final Mock Drill! 🚀
