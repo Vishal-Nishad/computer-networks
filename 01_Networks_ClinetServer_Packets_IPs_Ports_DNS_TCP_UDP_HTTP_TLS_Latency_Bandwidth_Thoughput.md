@@ -1,4 +1,4 @@
-# Day 1 Networking — exam Preparation Guide
+# Networking — exam Preparation Guide
 
 ---
 
@@ -11,7 +11,7 @@ By the end of Day 1 you will be able to:
 - Explain IP addresses, ports, and the difference between public and private IPs.
 - Explain what DNS does and why it exists.
 - Compare TCP and UDP and choose the right one for a given use case.
-- Explain what HTTP and HTTPS do in plain language.
+- Explain what HTTP and HTTPS do.
 - Walk through what happens end-to-end when a user opens a URL.
 - Define latency, bandwidth, and throughput and explain how they affect application performance.
 
