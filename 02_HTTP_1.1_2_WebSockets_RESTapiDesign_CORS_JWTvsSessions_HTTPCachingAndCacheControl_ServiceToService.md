@@ -1,7 +1,4 @@
-# Day 2 Networking — Interview Preparation Guide
-
-**For:** Software developers with ~2 years of experience preparing for ₹20+ LPA roles in India.
-**Prerequisite:** Complete [Day 1](./DAY1_INTERVIEW_GUIDE.md) first — this guide builds directly on it.
+# Networking — exam Preparation Guide
 
 ---
 
@@ -33,7 +30,7 @@ By the end of Day 2 you will be able to:
 |---|---|
 | Reading and understanding the concepts | 2.5 – 3 hours |
 | Practical exercises | 40 minutes |
-| Reviewing interview answers | 30 minutes |
+| Reviewing exam answers | 30 minutes |
 | **Total** | **~4.5 hours** |
 
 ---
@@ -50,7 +47,7 @@ By the end of Day 2 you will be able to:
 8. [Service-to-Service Communication](#7-service-to-service-communication)
 9. [Practical Exercises](#8-practical-exercises)
 10. [Quick Reference Tables](#9-quick-reference-tables)
-11. [Final Interview Prep: 12 Must-Know Q&A](#10-final-interview-prep)
+11. [Final exam Prep: 12 Must-Know Q&A](#10-final-exam-prep)
 
 ---
 
@@ -62,7 +59,7 @@ By the end of Day 2 you will be able to:
 | WebSockets — what, why, when | ✅ Today | Real-time systems question |
 | REST API design principles | ✅ Today | You write APIs every day |
 | CORS — what it is and how to fix it | ✅ Today | Every frontend-backend team hits this |
-| JWT vs Session authentication | ✅ Today | Asked in almost every interview |
+| JWT vs Session authentication | ✅ Today | Asked in almost every exam |
 | HTTP caching and Cache-Control | ✅ Today | System design and performance |
 | Service-to-service communication | ✅ Today | Microservices foundation |
 | HTTP/3 and QUIC | 🔜 Later | Built on UDP, worth learning after HTTP/2 |
@@ -70,13 +67,13 @@ By the end of Day 2 you will be able to:
 | GraphQL vs REST internals | 🔜 Later | Separate session |
 | gRPC | 🔜 Later | Service communication — Day 3 |
 | Message queues (Kafka, RabbitMQ) | 🔜 Later | Async communication — later sessions |
-| TLS certificate internals | 🔜 Later | Too deep for interview prep |
+| TLS certificate internals | 🔜 Later | Too deep for exam prep |
 
 ---
 
 ## 1. HTTP/1.1 vs HTTP/2
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 **HTTP/1.1** processes one request at a time per TCP connection, which forces browsers to open multiple parallel connections to load a page with many resources. **HTTP/2** allows multiple requests and responses to be sent simultaneously over a single TCP connection (called **multiplexing**), compresses headers, and supports server push — significantly improving page load performance without changing how developers write HTTP.
 
@@ -186,7 +183,7 @@ The server can proactively send resources the client will need before it asks. F
 **Misconception:** HTTP/2 makes any website fast.
 **Correction:** HTTP/2 reduces network overhead. Slow backend processing, large unoptimised images, and unminified JavaScript are not network problems — HTTP/2 does not help with them.
 
-### K. Short interview answer
+### K. Short exam answer
 
 > "HTTP/1.1 processes one request at a time per TCP connection, which causes head-of-line blocking when a page loads many resources. Browsers work around this by opening multiple connections, but that adds handshake overhead. HTTP/2 introduces multiplexing — multiple requests and responses travel over one TCP connection simultaneously. It also compresses headers, which matters for APIs with many calls that repeat large headers like auth tokens. As a backend developer I enable HTTP/2 at the Nginx or load balancer layer — my application code does not change. It significantly improves performance for pages with many resources, especially on mobile networks with higher latency."
 
@@ -194,7 +191,7 @@ The server can proactively send resources the client will need before it asks. F
 
 ## 2. WebSockets
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 A **WebSocket** is a communication protocol that provides a persistent, full-duplex (two-way) channel over a single TCP connection between a client and a server. Unlike HTTP, where the client must always initiate a request to receive data, WebSockets allow the server to push data to the client at any time, making them suitable for real-time applications.
 
@@ -329,7 +326,7 @@ If you only need the server to push data to the client (not the other way), SSE 
 **Misconception:** WebSocket connections never drop.
 **Correction:** Connections drop regularly — network changes, server restarts, idle timeouts. Production WebSocket implementations need reconnection logic, heartbeat pings to detect dead connections, and message queuing for reconnection.
 
-### K. Short interview answer
+### K. Short exam answer
 
 > "WebSockets provide a persistent, full-duplex connection between client and server over a single TCP connection. The connection starts as an HTTP request with an Upgrade header, the server responds with 101 Switching Protocols, and from then on both sides can send messages freely without new requests. I use WebSockets when the server needs to push data to clients in real time — like chat messages, live order notifications, or a live dashboard. The key design consideration is that WebSocket connections are stateful, so horizontal scaling requires a message broker like Redis Pub/Sub to distribute messages across multiple server instances."
 
@@ -337,7 +334,7 @@ If you only need the server to push data to the client (not the other way), SSE 
 
 ## 3. REST API Design
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 **REST (Representational State Transfer)** is an architectural style for designing networked APIs. A REST API uses standard HTTP methods to perform operations on **resources** identified by URLs. REST APIs are stateless — each request contains all the information needed to process it, and the server stores no client session state between requests.
 
@@ -485,9 +482,9 @@ If the server stored session state, Request 2 would need to go to the same serve
 **Correction:** GraphQL, gRPC, and tRPC are popular alternatives. REST is the most common and is the right default for most web APIs. GraphQL is better when clients need flexible queries over complex data graphs.
 
 **Misconception:** PUT and PATCH are the same thing.
-**Correction:** PUT replaces the entire resource. If you PUT `{"name":"Shoes"}` on a product that also has a `price` field, the `price` is gone. PATCH updates only the fields you send. In practice, most APIs implement PATCH behaviour and call it PUT — but in interviews, state the distinction correctly.
+**Correction:** PUT replaces the entire resource. If you PUT `{"name":"Shoes"}` on a product that also has a `price` field, the `price` is gone. PATCH updates only the fields you send. In practice, most APIs implement PATCH behaviour and call it PUT — but in exams, state the distinction correctly.
 
-### G. Short interview answer
+### G. Short exam answer
 
 > "REST is an architectural style where resources are identified by URLs and operations are performed using standard HTTP methods — GET to read, POST to create, PUT or PATCH to update, DELETE to remove. The key principles I follow are: use plural nouns in paths, not verbs; use HTTP methods to express intent; use the correct status code in responses; use query parameters for filtering and pagination; and keep the API stateless so any server instance can handle any request. Statelessness is what makes REST APIs easy to scale horizontally behind a load balancer."
 
@@ -495,7 +492,7 @@ If the server stored session state, Request 2 would need to go to the same serve
 
 ## 4. CORS — Cross-Origin Resource Sharing
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 **CORS (Cross-Origin Resource Sharing)** is a browser security mechanism that controls whether a web page running at one origin (domain + scheme + port) is allowed to make HTTP requests to a different origin. By default, browsers block such cross-origin requests unless the target server explicitly permits them using specific HTTP response headers.
 
@@ -627,7 +624,7 @@ Your API security comes from authentication and authorisation, not CORS.
 **Misconception:** Preflights happen for every request.
 **Correction:** Browsers send a preflight only for non-simple requests (non-GET/POST, or requests with custom headers like `Authorization`). Simple GET requests do not trigger a preflight. Preflights are also cached using `Access-Control-Max-Age`.
 
-### I. Short interview answer
+### I. Short exam answer
 
 > "CORS stands for Cross-Origin Resource Sharing. By default, browsers block JavaScript from making requests to a different origin — a different domain, scheme, or port — to protect users from cross-site request attacks. CORS lets a server declare which origins it permits by returning Access-Control-Allow-Origin and related headers. For non-simple requests like DELETE or anything with an Authorization header, the browser first sends an OPTIONS preflight request asking for permission. The critical thing to understand is that CORS is enforced by the browser, not the server — curl and Postman bypass it. So CORS is not API security; it's user protection. API security comes from authentication."
 
@@ -635,7 +632,7 @@ Your API security comes from authentication and authorisation, not CORS.
 
 ## 5. Authentication: JWT vs Sessions
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 **Session-based authentication** stores authentication state on the server. When a user logs in, the server creates a session record and sends a session ID to the client in a cookie. On each subsequent request, the client sends the cookie, and the server looks up the session. **JWT (JSON Web Token) authentication** stores authentication state in a signed token on the client. The server verifies the token's signature on each request without storing any session data.
 
@@ -711,7 +708,7 @@ The server verifies by recomputing the signature and comparing. If it matches, t
 
 ### E. The JWT Revocation Problem — and how to solve it
 
-This is a common interview question.
+This is a common exam question.
 
 **The problem:** A JWT is valid until it expires. If a user's account is compromised, or a user logs out, how do you invalidate their JWT before it expires?
 
@@ -764,7 +761,7 @@ When the access token expires, the client sends the refresh token to get a new a
 **Misconception:** Logging out invalidates a JWT.
 **Correction:** JWT logout on the client means deleting the token from client storage. The token itself remains valid until expiry. This is why short expiry times and refresh tokens are the correct pattern.
 
-### I. Short interview answer
+### I. Short exam answer
 
 > "Session-based auth stores state on the server: after login, the server creates a session, stores it in Redis, and sends a session ID cookie to the client. Every request requires a session store lookup. JWT auth is stateless: the server signs a token containing user info and sends it to the client. On each request, the server just verifies the signature — no database lookup. JWT scales better horizontally because any server can verify the token. The key trade-off is revocation: sessions are easy to revoke by deleting from the store. JWTs cannot be invalidated before expiry, so I use short-lived access tokens (15 minutes) paired with long-lived refresh tokens. The refresh token is stored in an HttpOnly cookie and can be revoked server-side."
 
@@ -772,7 +769,7 @@ When the access token expires, the client sends the refresh token to get a new a
 
 ## 6. HTTP Caching and Cache-Control
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 **HTTP caching** is a mechanism that stores copies of HTTP responses so that future requests for the same resource can be served from the cache rather than the origin server. The `Cache-Control` header lets the server specify caching rules: how long a response can be cached, who can cache it, and under what conditions it must be revalidated.
 
@@ -887,7 +884,7 @@ Because the URL changed, the browser has no cached version and downloads the new
 
 - **CDN + Cache-Control:** Setting appropriate `s-maxage` headers lets your CDN absorb most traffic for popular content, dramatically reducing origin server load.
 - **Database load reduction:** Caching API responses (even for 60 seconds) can reduce database queries by orders of magnitude during traffic spikes.
-- **Cache invalidation:** "There are only two hard things in computer science: cache invalidation and naming things." When data changes, how do you clear the relevant cached responses? This is a real design challenge — worth discussing in interviews.
+- **Cache invalidation:** "There are only two hard things in computer science: cache invalidation and naming things." When data changes, how do you clear the relevant cached responses? This is a real design challenge — worth discussing in exams.
 
 ### I. Common mistakes and misconceptions
 
@@ -897,7 +894,7 @@ Because the URL changed, the browser has no cached version and downloads the new
 **Misconception:** Caching is only for static files.
 **Correction:** API responses can and should be cached when appropriate. A product list that changes every few minutes can be cached with a 60-second TTL. This is often the difference between a server handling 100 requests/second and 10,000 requests/second.
 
-### J. Short interview answer
+### J. Short exam answer
 
 > "HTTP caching lets browsers and CDNs store response copies to avoid fetching the same resource from the origin server repeatedly. The Cache-Control header controls this: max-age sets how long the cache is valid, public allows CDNs to cache it, private restricts it to the browser only, and no-store disables caching entirely for sensitive data. I use aggressive caching for static assets using content-hashed filenames so I can set a year-long max-age safely. For API responses, short TTLs like 60 seconds can dramatically reduce database load during traffic spikes. ETags let clients revalidate expired caches cheaply — a 304 Not Modified response has no body, saving bandwidth."
 
@@ -905,7 +902,7 @@ Because the URL changed, the browser has no cached version and downloads the new
 
 ## 7. Service-to-Service Communication
 
-### A. Interview-ready definition
+### A. exam-ready definition
 
 **Service-to-service communication** refers to how backend services (microservices or monolith components) call each other over a network. This can be **synchronous** — the caller waits for an immediate response (using HTTP or gRPC) — or **asynchronous** — the caller sends a message and continues without waiting for a response (using message queues like Kafka or RabbitMQ).
 
@@ -1039,7 +1036,7 @@ Only users trying to pay are affected
 **Misconception:** Connection pooling is automatic and requires no configuration.
 **Correction:** Most clients create a default pool, but the default size is often too small for high-traffic production systems. You need to configure pool size based on your request rate and database capacity.
 
-### I. Short interview answer
+### I. Short exam answer
 
 > "Service-to-service communication is either synchronous or asynchronous. For operations that need an immediate response — like checking inventory before confirming an order — I use synchronous HTTP calls. The risk is tight coupling: if any service is slow, the caller is slow too, so I set strict timeouts on every outbound call. For operations that can happen after responding to the user — like sending a confirmation email — I use async communication through a message queue. The message is published and the caller responds immediately; the consumer processes it independently. For database connections, I always configure a connection pool so we reuse established TCP connections rather than creating new ones for every request."
 
@@ -1064,7 +1061,7 @@ Only users trying to pay are affected
 
 **What it does not prove:** You cannot directly see the multiplexing within a single connection in DevTools, but the low connection count and parallel loading is evidence of it.
 
-**Interview connection:** "I check the Protocol column in DevTools to verify HTTP/2 is active. If I see http/1.1 for everything, it usually means HTTP/2 is not configured on the load balancer or Nginx."
+**exam connection:** "I check the Protocol column in DevTools to verify HTTP/2 is active. If I see http/1.1 for everything, it usually means HTTP/2 is not configured on the load balancer or Nginx."
 
 ---
 
@@ -1096,7 +1093,7 @@ fetch('https://httpbin.org/get', {
 - The `Access-Control-Allow-*` headers in the preflight response.
 - How the browser either allows or blocks the subsequent request.
 
-**Interview connection:** "When a developer sees a CORS error in the browser, the fix is always on the server — add the correct Access-Control-Allow-Origin header. The browser is correctly enforcing the server's policy."
+**exam connection:** "When a developer sees a CORS error in the browser, the fix is always on the server — add the correct Access-Control-Allow-Origin header. The browser is correctly enforcing the server's policy."
 
 ---
 
@@ -1117,7 +1114,7 @@ fetch('https://httpbin.org/get', {
 
 **What it does not prove:** This shows the JWT structure. It does not show the server-side verification logic.
 
-**Interview connection:** "JWT payloads are base64-encoded, not encrypted. Anyone with the token can decode and read the claims. That's why I never put sensitive information like passwords or card numbers in the payload."
+**exam connection:** "JWT payloads are base64-encoded, not encrypted. Anyone with the token can decode and read the claims. That's why I never put sensitive information like passwords or card numbers in the payload."
 
 ---
 
@@ -1138,7 +1135,7 @@ fetch('https://httpbin.org/get', {
 
 **What it does not prove:** You see the declared caching rules. You cannot see whether a CDN cache served the response (CDN caches are transparent to DevTools).
 
-**Interview connection:** "I set long max-age on static assets because we use content hashes in filenames. When we deploy, the filename changes, so browsers fetch the new file. Short TTLs on API responses balance freshness with server load."
+**exam connection:** "I set long max-age on static assets because we use content hashes in filenames. When we deploy, the filename changes, so browsers fetch the new file. Short TTLs on API responses balance freshness with server load."
 
 ---
 
@@ -1163,7 +1160,7 @@ tasklist | findstr <PID>
 
 **What it does not prove:** `netstat` shows TCP connections. It does not show UDP or HTTP/2 streams.
 
-**Interview connection:** "When debugging connection exhaustion issues, I use netstat to see how many connections a process holds and whether they are in ESTABLISHED, TIME_WAIT, or CLOSE_WAIT state. Too many TIME_WAIT connections often indicates connection pooling is not configured."
+**exam connection:** "When debugging connection exhaustion issues, I use netstat to see how many connections a process holds and whether they are in ESTABLISHED, TIME_WAIT, or CLOSE_WAIT state. Too many TIME_WAIT connections often indicates connection pooling is not configured."
 
 ---
 
@@ -1219,7 +1216,7 @@ tasklist | findstr <PID>
 
 ---
 
-## 10. Final Interview Prep
+## 10. Final exam Prep
 
 ### 12 Questions You Must Be Able to Answer Confidently
 
